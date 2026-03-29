@@ -67,7 +67,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ beforeImag
       />
       
       {/* Label After */}
-      <div className="absolute top-4 right-4 bg-red-600/90 backdrop-blur-sm text-white px-3 py-1 text-xs font-bold rounded uppercase tracking-wider z-10 shadow-lg">
+      <div className="absolute top-4 right-4 bg-brand-red-600/90 backdrop-blur-sm text-white px-3 py-1 text-xs font-bold rounded uppercase tracking-wider z-10 shadow-lg">
         Depois
       </div>
 
@@ -94,7 +94,7 @@ export const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({ beforeImag
         className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
         style={{ left: `${sliderPosition}%` }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center text-red-600 transform group-hover:scale-110 transition-transform">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full shadow-xl flex items-center justify-center text-brand-red-600 transform group-hover:scale-110 transition-transform">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M8 9l-3 3 3 3m8-6l3 3-3 3" />
           </svg>

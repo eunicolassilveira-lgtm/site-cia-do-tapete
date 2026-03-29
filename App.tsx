@@ -92,14 +92,14 @@ export function App() {
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-red-100 selection:text-red-900 overflow-x-hidden">
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans selection:bg-brand-red-100 selection:text-brand-red-900 overflow-x-hidden">
       {/* Header / Navigation */}
-      <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm transition-all duration-300">
+      <nav className="static z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm transition-all duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-20 items-center">
+          <div className="flex justify-between h-24 items-center">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-              <span className="text-xl md:text-2xl font-extrabold text-gray-900 tracking-tight group-hover:text-red-700 transition-colors">Cia do Tapete</span>
+              <img src="https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/FEED%20CIA%20DO%20TAPETE.PNG?raw=true" alt="Cia do Tapete" className="h-[100px] w-auto" />
             </div>
 
             {/* Desktop Menu */}
@@ -108,17 +108,17 @@ export function App() {
                 <a 
                   key={item}
                   href={`#${item.toLowerCase().replace('ó', 'o').replace('í', 'i')}`} 
-                  className="relative text-gray-600 hover:text-red-600 font-medium transition-colors text-sm uppercase tracking-wide group py-2"
+                  className="relative text-gray-600 hover:text-brand-red-600 font-medium transition-colors text-sm uppercase tracking-wide group py-2"
                 >
                   {item}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-red-600 transition-all duration-300 group-hover:w-full"></span>
                 </a>
               ))}
             </div>
 
             {/* Mobile Menu Button */}
             <div className="md:hidden flex items-center">
-              <button onClick={toggleMobileMenu} className="text-gray-600 hover:text-red-600 focus:outline-none p-2" aria-label="Abrir menu">
+              <button onClick={toggleMobileMenu} className="text-gray-600 hover:text-brand-red-600 focus:outline-none p-2" aria-label="Abrir menu">
                 <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   {isMobileMenuOpen ? (
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -133,12 +133,12 @@ export function App() {
 
         {/* Mobile Menu Dropdown */}
         {isMobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-gray-200 animate-fade-in absolute w-full left-0 top-20 shadow-xl z-50">
+          <div className="md:hidden bg-white border-b border-gray-200 animate-fade-in absolute w-full left-0 top-24 shadow-xl z-50">
             <div className="px-4 pt-2 pb-6 space-y-2 flex flex-col">
-              <a href="#produtos" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 border-b border-gray-100">Produtos</a>
-              <a href="#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 border-b border-gray-100">Portfólio</a>
-              <a href="#sobre" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 border-b border-gray-100">Sobre</a>
-              <a href="#diferenciais" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-red-600 hover:bg-gray-50 border-b border-gray-100">Diferenciais</a>
+              <a href="#produtos" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-brand-red-600 hover:bg-gray-50 border-b border-gray-100">Produtos</a>
+              <a href="#portfolio" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-brand-red-600 hover:bg-gray-50 border-b border-gray-100">Portfólio</a>
+              <a href="#sobre" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-brand-red-600 hover:bg-gray-50 border-b border-gray-100">Sobre</a>
+              <a href="#diferenciais" onClick={() => setIsMobileMenuOpen(false)} className="block px-3 py-4 rounded-md text-base font-medium text-gray-700 hover:text-brand-red-600 hover:bg-gray-50 border-b border-gray-100">Diferenciais</a>
             </div>
           </div>
         )}
@@ -153,7 +153,6 @@ export function App() {
             backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
           }}
         ></div>
         
@@ -161,14 +160,14 @@ export function App() {
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/70 via-black/80 to-[#0a0a0a]"></div>
 
         {/* Subtle red glow effect behind the text */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-red-600/20 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col items-center text-center">
           
           {/* Main Headline */}
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black text-white tracking-tighter leading-[1.1] mb-6 animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
             Sua empresa merece uma <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-700">Entrada Triunfal.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-red-500 to-brand-red-700">Entrada Triunfal.</span>
           </h1>
 
           {/* Subheadline */}
@@ -228,7 +227,7 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
             <div className="text-center mb-16">
-              <span className="text-red-600 font-bold tracking-widest uppercase text-xs">Portfólio</span>
+              <span className="text-brand-red-600 font-bold tracking-widest uppercase text-xs">Portfólio</span>
               <h2 className="text-3xl md:text-4xl font-black text-gray-900 mt-2">Transformações Reais</h2>
               <p className="mt-4 text-gray-600 text-base md:text-lg max-w-2xl mx-auto">
                 Veja o impacto de um capacho personalizado na entrada de um negócio.
@@ -245,7 +244,7 @@ export function App() {
                     afterImage={item.afterImage}
                     alt={item.alt}
                   />
-                  <div className="px-2 border-l-4 border-red-600 pl-6">
+                  <div className="px-2 border-l-4 border-brand-red-600 pl-6">
                     <h4 className="font-bold text-xl md:text-2xl text-gray-900">{item.title}</h4>
                     <p className="text-gray-600 mt-2 italic text-base md:text-lg leading-relaxed">{item.description}</p>
                   </div>
@@ -261,16 +260,16 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn>
              <div className="text-center mb-16">
-              <span className="text-red-600 font-bold tracking-widest uppercase text-xs">Nosso Catálogo</span>
+              <span className="text-brand-red-600 font-bold tracking-widest uppercase text-xs">Nosso Catálogo</span>
               <h2 className="text-3xl md:text-5xl font-black text-gray-900 mt-2 tracking-tight">Soluções Completas</h2>
-              <div className="w-24 h-1 bg-red-600 mx-auto mt-6 rounded-full"></div>
+              <div className="w-24 h-1 bg-brand-red-600 mx-auto mt-6 rounded-full"></div>
             </div>
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {PRODUCTS.map((product, index) => (
               <FadeIn key={product.id} delay={index * 150} direction="up" className="h-full">
-                <div className={`group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100 ${product.highlight ? 'ring-2 ring-red-500 ring-offset-4 ring-offset-neutral-50' : ''}`}>
+                <div className={`group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 h-full flex flex-col border border-gray-100 ${product.highlight ? 'ring-2 ring-brand-red-500 ring-offset-4 ring-offset-neutral-50' : ''}`}>
                   
                   {/* Image Area */}
                   <div className="relative h-64 overflow-hidden">
@@ -282,7 +281,7 @@ export function App() {
                       loading="lazy"
                     />
                     {product.highlight && (
-                      <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-md">
+                      <div className="absolute top-4 right-4 bg-brand-red-600 text-white text-xs font-bold px-3 py-1 rounded-full z-20 shadow-md">
                         Mais Vendido
                       </div>
                     )}
@@ -297,7 +296,7 @@ export function App() {
                         </span>
                       ))}
                     </div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-red-600 transition-colors">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-brand-red-600 transition-colors">
                       {product.title}
                     </h3>
                     <p className="text-gray-600 text-sm mb-6 leading-relaxed flex-grow">
@@ -325,12 +324,12 @@ export function App() {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
         
         {/* Decorative Glow */}
-        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-red-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-brand-red-600/20 rounded-full blur-[120px] pointer-events-none"></div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <FadeIn>
               <div className="text-center mb-12 md:mb-16">
-                  <span className="text-red-500 font-bold tracking-widest uppercase text-xs border border-red-900 bg-red-900/30 px-3 py-1 rounded-full">Exclusivo para Capachos</span>
+                  <span className="text-red-500 font-bold tracking-widest uppercase text-xs border border-brand-red-900 bg-brand-red-900/30 px-3 py-1 rounded-full">Exclusivo para Capachos</span>
                   <h2 className="text-4xl md:text-5xl font-extrabold text-white mt-6 mb-6 tracking-tight">Simulador de Tapetes</h2>
                   <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
                       Envie uma foto da sua entrada e visualize como ficaria um capacho personalizado.
@@ -349,7 +348,7 @@ export function App() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-20 items-center">
             <FadeIn direction="right" className="mb-12 lg:mb-0 relative group">
                {/* Ajuste visual: rotação reduzida e opacidade ajustada para parecer mais 'centrado' e menos caótico */}
-               <div className="absolute inset-0 bg-red-600 rounded-2xl transform rotate-1 scale-[1.02] opacity-10 transition-transform group-hover:rotate-0"></div>
+               <div className="absolute inset-0 bg-brand-red-600 rounded-2xl transform rotate-1 scale-[1.02] opacity-10 transition-transform group-hover:rotate-0"></div>
                {/* 360 Panorama Viewer Replacement */}
                <PanoramaViewer 
                   imageUrl="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepO37SOukCHDBIp_UdPHsUtXJGOVayKaqnhdubGKuI2Njx78mjUveIY_dxUpfHAH5BoTx1N3yCaFCqSemJ_lRYnyPDacvvHj1CWt0D7VrFt16XzqxPKVNo1lvgYtifigFFsAwNPrA=w4096-h2048-k-no" 
@@ -359,7 +358,7 @@ export function App() {
             </FadeIn>
             <FadeIn direction="left">
               <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6 md:mb-8 leading-tight">
-                Tradição que se vê <br className="hidden md:block" /> <span className="text-red-600">na qualidade.</span>
+                Tradição que se vê <br className="hidden md:block" /> <span className="text-brand-red-600">na qualidade.</span>
               </h2>
               <div className="space-y-6 text-base md:text-lg text-gray-600 leading-relaxed text-justify md:text-left">
                 <p>
@@ -390,8 +389,8 @@ export function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Item 1 */}
             <FadeIn delay={100} className="h-full">
-              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-brand-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-red-600 to-brand-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
                   <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
@@ -405,8 +404,8 @@ export function App() {
 
             {/* Item 2 */}
             <FadeIn delay={300} className="h-full">
-              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-brand-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-red-600 to-brand-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
                   <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
                   </svg>
@@ -420,8 +419,8 @@ export function App() {
 
             {/* Item 3 */}
             <FadeIn delay={500} className="h-full">
-              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
-                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-red-600 to-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
+              <div className="bg-neutral-800/50 p-8 md:p-10 rounded-2xl border border-neutral-700 hover:border-brand-red-600 transition-all duration-300 hover:transform hover:-translate-y-2 hover:shadow-[0_10px_40px_-10px_rgba(220,38,38,0.2)] group h-full">
+                <div className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-brand-red-600 to-brand-red-800 rounded-xl flex items-center justify-center mb-6 md:mb-8 shadow-lg group-hover:scale-110 transition-transform">
                   <svg className="w-7 h-7 md:w-8 md:h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                   </svg>
@@ -446,9 +445,9 @@ export function App() {
           <div className="space-y-4">
             {FAQS.map((faq, i) => (
               <details key={i} className="group bg-white rounded-xl shadow-sm border border-gray-100 [&_summary::-webkit-details-marker]:hidden">
-                <summary className="flex items-center justify-between p-6 cursor-pointer font-medium text-gray-900 hover:text-red-600 transition-colors">
+                <summary className="flex items-center justify-between p-6 cursor-pointer font-medium text-gray-900 hover:text-brand-red-600 transition-colors">
                   {faq.q}
-                  <span className="transition duration-300 group-open:rotate-180 text-gray-400 group-hover:text-red-600">
+                  <span className="transition duration-300 group-open:rotate-180 text-gray-400 group-hover:text-brand-red-600">
                     <svg fill="none" height="24" shapeRendering="geometricPrecision" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" viewBox="0 0 24 24" width="24"><path d="M6 9l6 6 6-6"></path></svg>
                   </span>
                 </summary>
@@ -467,7 +466,7 @@ export function App() {
           
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-2">
-             <span className="text-2xl font-black text-white tracking-tight">Cia do Tapete</span>
+             <img src="https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/FEED%20CIA%20DO%20TAPETE.PNG?raw=true" alt="Cia do Tapete" className="h-40 w-auto" />
              <p className="mt-4 text-gray-500 text-sm leading-relaxed max-w-sm">
                Soluções completas em tapetes, cortinas e windbanners desde 1996.
              </p>
@@ -484,7 +483,7 @@ export function App() {
                 className="flex items-center gap-3 group"
                 aria-label="Instagram"
               >
-                <div className="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center group-hover:bg-red-600 transition-colors shrink-0">
+                <div className="w-12 h-12 bg-neutral-800 rounded-full flex items-center justify-center group-hover:bg-brand-red-600 transition-colors shrink-0">
                   <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 6.838c-2.85 0-5.162 2.312-5.162 5.162s2.312 5.162 5.162 5.162 5.162-2.312 5.162-5.162-2.312-5.162-5.162-5.162zm0 8.462c-1.821 0-3.3-1.479-3.3-3.3s1.479-3.3 3.3-3.3 3.3 1.479 3.3 3.3-1.479 3.3-3.3 3.3zm3.406-7.845c-.663 0-1.2.537-1.2 1.2s.537 1.2 1.2 1.2 1.2-.537 1.2-1.2-.537-1.2-1.2-1.2z"/>
                   </svg>
@@ -500,8 +499,8 @@ export function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
           <p>&copy; {new Date().getFullYear()} Cia do Tapete. Todos os direitos reservados.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-             <a href="#" className="hover:text-red-500 transition-colors">Política de Privacidade</a>
-             <a href="#" className="hover:text-red-500 transition-colors">Termos de Uso</a>
+             <a href="#" className="hover:text-brand-red-500 transition-colors">Política de Privacidade</a>
+             <a href="#" className="hover:text-brand-red-500 transition-colors">Termos de Uso</a>
           </div>
         </div>
       </footer>

@@ -119,7 +119,7 @@ export const ImageEditor: React.FC = () => {
                   >
                     {isLoading ? (
                       <div className="flex flex-col items-center space-y-3">
-                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-red-600"></div>
+                        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-red-600"></div>
                         <p className="text-sm text-gray-500 animate-pulse">A IA está desenhando seu tapete...</p>
                       </div>
                     ) : generatedImage ? (
@@ -153,7 +153,7 @@ export const ImageEditor: React.FC = () => {
                       value={prompt}
                       onChange={(e) => setPrompt(e.target.value)}
                       placeholder="Ex: Adicione um capacho bege com a escrita 'Bem Vindo'..."
-                      className="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none text-gray-900 bg-white"
+                      className="flex-grow p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-red-500 focus:border-brand-red-500 outline-none text-gray-900 bg-white"
                       disabled={isLoading}
                     />
                   </div>
@@ -172,7 +172,7 @@ export const ImageEditor: React.FC = () => {
               </div>
 
               {error && (
-                <div className="p-4 bg-red-50 text-red-700 rounded-lg border border-red-200">
+                <div className="p-4 bg-brand-red-50 text-brand-red-700 rounded-lg border border-brand-red-200">
                   <strong>Erro:</strong> {error}
                 </div>
               )}
