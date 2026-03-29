@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Cia do Tapete</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Pannellum (360 Viewer) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" crossorigin="anonymous" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js" crossorigin="anonymous"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              fadeInUp: {
+                '0%': { opacity: '0', transform: 'translateY(20px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
+              },
+              /* Nova animação: Revelação Mecânica (Print Head) */
+              mechanicalPrintReveal: {
+                '0%': { 
+                  opacity: '0',
+                  transform: 'translateX(-20px)',
+                  'clip-path': 'inset(0 100% 0 0)' /* Escondido totalmente à direita */
+                },
+                '100%': { 
+                  opacity: '0.95',
+                  transform: 'translateX(0)',
+                  'clip-path': 'inset(0 0% 0 0)' /* Revelado totalmente */
+                }
+              },
+              glow: {
+                '0%, 100%': { opacity: '1', boxShadow: '0 0 20px #dc2626' },
+                '50%': { opacity: '0.8', boxShadow: '0 0 10px #dc2626' }
+              }
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.5s ease-out',
+              'fade-in-up': 'fadeInUp 0.7s ease-out forwards',
+              'mechanical-reveal': 'mechanicalPrintReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
+              'glow-pulse': 'glow 2s infinite',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      html { scroll-behavior: smooth; }
+      body { font-family: 'Inter', sans-serif; overflow-x: hidden; }
+      
+      ::-webkit-scrollbar { width: 10px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #dc2626; border-radius: 5px; }
+      ::-webkit-scrollbar-thumb:hover { background: #b91c1c; }
+
+      .pnlm-load-box { background-color: rgba(0,0,0,0.7) !important; border-radius: 8px; }
+      .pnlm-lbar-fill { background: #dc2626 !important; }
+
+      /* --- REALISTIC VINYL TEXTURE (Capacho de Trama Real) --- */
+      .bg-vinyl-realistic {
+        background-color: #050505; 
+        
+        /* 
+           SVG Filter: Gera uma textura de "macarrão" emaranhado (vinyl loop)
+           usando ruído de alta frequência, limiarização para criar fios finos,
+           e sombras para dar profundidade 3D.
+        */
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='vinyl-loop' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.08' numOctaves='4' seed='5' result='noise'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 9 -4 0 0 0' in='noise' result='highContrast'/%3E%3CfeMorphology operator='dilate' radius='0.5' in='highContrast' result='thickened'/%3E%3CfeColorMatrix type='matrix' values='0.3 0 0 0 0.1 0.3 0 0 0 0.1 0.3 0 0 0 0.1 0 0 0 1 0' in='thickened' result='colored'/%3E%3CfeDropShadow dx='2' dy='3' stdDeviation='2' flood-color='%23000' flood-opacity='1' in='colored' result='shadow1'/%3E%3CfeDropShadow dx='-1' dy='-1' stdDeviation='1' flood-color='%23ffffff' flood-opacity='0.15' in='shadow1' result='highlight'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%230a0a0a'/%3E%3Crect width='100%25' height='100%25' filter='url(%23vinyl-loop)'/%3E%3C/svg%3E");
+        
+        background-size: 256px 256px;
+        position: relative;
+        box-shadow: inset 0 0 150px rgba(0,0,0,0.9); /* Vinheta dramática */
+      }
+      
+      /* Adicionando um leve brilho especular para simular o plástico/vinil */
+      .bg-vinyl-realistic::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.08) 0%, transparent 60%);
+        pointer-events: none;
+      }
+
+      /* --- TIPOGRAFIA VINÍLICA (Tinta Fresca) --- */
+      .text-vinyl-printed-mechanical {
+        /* Cor Vermelha Vibrante */
+        color: #ef4444; 
+        
+        /* 
+           Interação Tinta-Textura:
+           'hard-light' em fundo escuro funciona melhor que 'multiply' para cores vivas.
+           Ela faz o vermelho brilhar, mas deixa as sombras do fundo (fios pretos) cortarem a tinta.
+        */
+        mix-blend-mode: hard-light; 
+        
+        /* Opacidade solicitada para não parecer adesivo sólido */
+        opacity: 0.95;
+        
+        /* Especularidade (Brilho de tinta molhada/vinil) */
+        text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+        
+        /* A animação de revelação mecânica */
+        animation: mechanicalPrintReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        
+        /* Garante que o texto comece oculto antes da animação */
+        will-change: transform, opacity, clip-path;
+      }
+      
+      @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .animate-marquee {
+        animation: marquee 20s linear infinite;
+      }
+
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "@google/genai": "https://esm.sh/@google/genai@^1.38.0"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
