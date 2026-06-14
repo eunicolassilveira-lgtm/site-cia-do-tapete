@@ -31,7 +31,7 @@ const PRODUCTS = [
     id: 'windbanners',
     title: "Windbanners",
     description: "Marketing visual de alto impacto com movimento e cores vibrantes.",
-    image: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/Cia%20do%20Tapete.jpg&output=webp&w=800",
+    image: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/site-cia-do-tapete/main/WhatsApp%20Image%202026-06-14%20at%2019.58.19.jpeg&output=webp&w=800",
     highlight: false,
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20WindBanner",
     badges: ["Alta Visibilidade", "Resistente ao Vento"],
@@ -307,7 +307,7 @@ export function App() {
                     <img 
                       src={product.image} 
                       alt={product.title} 
-                      className={`w-full h-full ${product.imageClassName || 'object-cover'} transform group-hover:scale-105 transition-transform duration-700`}
+                      className={`w-full h-full ${product.imageClassName || 'object-cover object-center'} transform group-hover:scale-105 transition-transform duration-700`}
                       loading="lazy"
                     />
                     {product.highlight && (
