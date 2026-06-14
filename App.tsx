@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, lazy, Suspense, useEffect } from 'react';
 import { Button } from './components/Button';
-import { ImageEditor } from './components/ImageEditor';
+const ImageEditor = lazy(() => import('./components/ImageEditor').then(m => ({ default: m.ImageEditor })));
 import { BeforeAfterSlider } from './components/BeforeAfterSlider';
-import { PanoramaViewer } from './components/PanoramaViewer';
 import { FadeIn } from './components/FadeIn';
 
 // --- DADOS DOS PRODUTOS ---
@@ -11,11 +10,12 @@ const PRODUCTS = [
     id: 'capachos',
     title: "Tapetes Clean Kap & Capachos",
     description: "Personalização em Alta Definição ou Vulcanização. Retém até 80% da sujeira.",
-    image: "https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/capacho%20grill.jpg?raw=true",
+    image: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/capacho%20grill.jpg&output=webp&w=800",
     highlight: true, // Carro chefe
     imageClassName: "object-cover object-center w-full h-full group-hover:scale-105 transition-transform duration-700",
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20capacho",
-    badges: ["Retém 80% Sujeira", "Antiderrapante", "Alta Durabilidade"]
+    badges: ["Retém 80% Sujeira", "Antiderrapante", "Alta Durabilidade"],
+    pixelName: "Tapetes Clean Kap e Capachos"
   },
   {
     id: 'cortinas',
@@ -24,25 +24,28 @@ const PRODUCTS = [
     image: "https://lh3.googleusercontent.com/p/AF1QipOrmxS2yEetqd8oaWm_IyRTM_HaUQuAcGlnGgK1=s680-w680-h510-rw",
     highlight: false,
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20cortinas%2Fpersianas",
-    badges: ["Sob Medida", "Fácil Limpeza"]
+    badges: ["Sob Medida", "Fácil Limpeza"],
+    pixelName: "Cortinas e Persianas"
   },
   {
     id: 'windbanners',
     title: "Windbanners",
     description: "Marketing visual de alto impacto com movimento e cores vibrantes.",
-    image: "https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/Cia%20do%20Tapete.jpg?raw=true",
+    image: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/Cia%20do%20Tapete.jpg&output=webp&w=800",
     highlight: false,
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20WindBanner",
-    badges: ["Alta Visibilidade", "Resistente ao Vento"]
+    badges: ["Alta Visibilidade", "Resistente ao Vento"],
+    pixelName: "Windbanners"
   },
   {
     id: 'grama',
     title: "Grama Sintética",
     description: "Verde o ano todo sem manutenção. Ideal para jardins e playgrounds.",
-    image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=2545&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1558904541-efa843a96f01?q=80&w=800&auto=format&fit=crop&fm=webp",
     highlight: false,
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20grama%20sint%C3%A9tica",
-    badges: ["Zero Manutenção", "Proteção UV"]
+    badges: ["Zero Manutenção", "Proteção UV"],
+    pixelName: "Grama Sintetica"
   }
 ];
 
@@ -60,19 +63,45 @@ const PORTFOLIO_ITEMS = [
     id: 1,
     title: "Aladdin Arguilas",
     description: "O tapete virou parte essencial da identidade visual da loja.",
-    beforeImage: "https://raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.14.31.jpeg",
-    afterImage: "https://raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.14.44.jpeg",
+    beforeImage: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.14.31.jpeg&output=webp&w=1200",
+    afterImage: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.14.44.jpeg&output=webp&w=1200",
     alt: "Capacho Personalizado Aladdin"
   },
   {
     id: 2,
     title: "Identidade Visual Corporativa",
     description: "A entrada ganhou vida e profissionalismo.",
-    beforeImage: "https://raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.15.10.jpeg",
-    afterImage: "https://raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.15.23.jpeg",
+    beforeImage: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.15.10.jpeg&output=webp&w=1200",
+    afterImage: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/WhatsApp%20Image%202026-02-09%20at%2020.15.23.jpeg&output=webp&w=1200",
     alt: "Entrada Corporativa"
   }
 ];
+
+// --- LAZY RENDER WRAPPER ---
+const LazyLoadWrapper: React.FC<{ children: React.ReactNode; height?: string }> = ({ children, height = "400px" }) => {
+  const [inView, setInView] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          if (ref.current) observer.unobserve(ref.current);
+        }
+      },
+      { rootMargin: "200px" } // Carrega um pouco antes de chegar na tela
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div ref={ref} style={{ minHeight: inView ? 'auto' : height }}>
+      {inView ? children : null}
+    </div>
+  );
+};
 
 export function App() {
   const contactRef = useRef<HTMLElement>(null);
@@ -99,7 +128,7 @@ export function App() {
           <div className="flex justify-between h-24 items-center">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo(0,0)}>
-              <img src="https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/FEED%20CIA%20DO%20TAPETE.PNG?raw=true" alt="Cia do Tapete" className="h-[100px] w-auto" />
+              <img src="https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/FEED%20CIA%20DO%20TAPETE.PNG&output=webp&w=400" alt="Cia do Tapete" className="h-[100px] w-auto" />
             </div>
 
             {/* Desktop Menu */}
@@ -150,7 +179,7 @@ export function App() {
         <div 
           className="absolute inset-0 z-0"
           style={{ 
-            backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop")',
+            backgroundImage: 'url("https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop&fm=webp")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -181,6 +210,7 @@ export function App() {
             {/* WhatsApp Button */}
             <a 
               href="https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20capacho" 
+              onClick={() => { if (typeof (window as any).fbq === 'function') (window as any).fbq('track', 'Lead', {content_name: 'WhatsApp Geral'}); }}
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-3 text-lg px-8 py-4 bg-[#25D366] hover:bg-[#20bd5a] text-white rounded-xl font-bold uppercase tracking-wide transition-all transform hover:scale-105 hover:shadow-[0_0_20px_rgba(37,211,102,0.4)]"
@@ -306,7 +336,16 @@ export function App() {
                     <Button 
                       variant={product.highlight ? "primary" : "outline"} 
                       fullWidth 
-                      onClick={() => product.whatsappLink ? window.open(product.whatsappLink, '_blank') : scrollToContact()} 
+                      onClick={() => {
+                        if (typeof (window as any).fbq === 'function' && product.pixelName) {
+                          (window as any).fbq('track', 'Lead', {content_name: product.pixelName});
+                        }
+                        if (product.whatsappLink) {
+                          window.open(product.whatsappLink, '_blank');
+                        } else {
+                          scrollToContact();
+                        }
+                      }} 
                       className="text-sm py-2"
                     >
                       Orçamento
@@ -337,7 +376,11 @@ export function App() {
               </div>
             </FadeIn>
             <FadeIn delay={200} direction="up">
-              <ImageEditor />
+              <LazyLoadWrapper height="500px">
+                <Suspense fallback={<div className="h-[400px] flex items-center justify-center border border-neutral-800 rounded-xl bg-neutral-900 mx-auto w-full"><p className="text-gray-400">Carregando Simulador...</p></div>}>
+                  <ImageEditor />
+                </Suspense>
+              </LazyLoadWrapper>
             </FadeIn>
         </div>
       </section>
@@ -350,10 +393,11 @@ export function App() {
                {/* Ajuste visual: rotação reduzida e opacidade ajustada para parecer mais 'centrado' e menos caótico */}
                <div className="absolute inset-0 bg-brand-red-600 rounded-2xl transform rotate-1 scale-[1.02] opacity-10 transition-transform group-hover:rotate-0"></div>
                {/* 360 Panorama Viewer Replacement */}
-               <PanoramaViewer 
-                  imageUrl="https://lh3.googleusercontent.com/gps-cs-s/AHVAwepO37SOukCHDBIp_UdPHsUtXJGOVayKaqnhdubGKuI2Njx78mjUveIY_dxUpfHAH5BoTx1N3yCaFCqSemJ_lRYnyPDacvvHj1CWt0D7VrFt16XzqxPKVNo1lvgYtifigFFsAwNPrA=w4096-h2048-k-no" 
-                  initialPitch={-5}
-                  initialHfov={100}
+               <img 
+                 src="https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/site-cia-do-tapete/main/WhatsApp%20Image%202026-06-14%20at%2018.33.24.jpeg&output=webp&w=1200" 
+                 alt="Cia do Tapete - Tour Visual"
+                 loading="lazy"
+                 className="relative w-full h-[350px] md:h-[500px] object-cover rounded-2xl shadow-xl border border-gray-100"
                />
             </FadeIn>
             <FadeIn direction="left">
@@ -466,7 +510,7 @@ export function App() {
           
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-2">
-             <img src="https://github.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/blob/main/FEED%20CIA%20DO%20TAPETE.PNG?raw=true" alt="Cia do Tapete" className="h-40 w-auto" />
+             <img src="https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/Imagem-cia-do-tapete/main/FEED%20CIA%20DO%20TAPETE.PNG&output=webp&w=400" alt="Cia do Tapete" className="h-40 w-auto" loading="lazy" />
              <p className="mt-4 text-gray-500 text-sm leading-relaxed max-w-sm">
                Soluções completas em tapetes, cortinas e windbanners desde 1996.
              </p>
@@ -497,7 +541,11 @@ export function App() {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center text-sm text-gray-600">
-          <p>&copy; {new Date().getFullYear()} Cia do Tapete. Todos os direitos reservados.</p>
+          <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 text-center md:text-left">
+            <p>&copy; {new Date().getFullYear()} Cia do Tapete. Todos os direitos reservados.</p>
+            <span className="hidden md:inline">•</span>
+            <p>Desenvolvido por Arka Digital</p>
+          </div>
           <div className="flex space-x-6 mt-4 md:mt-0">
              <a href="#" className="hover:text-brand-red-500 transition-colors">Política de Privacidade</a>
              <a href="#" className="hover:text-brand-red-500 transition-colors">Termos de Uso</a>
@@ -508,6 +556,7 @@ export function App() {
       {/* Floating WhatsApp Button */}
       <a 
         href="https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento"
+        onClick={() => { if (typeof (window as any).fbq === 'function') (window as any).fbq('track', 'Lead', {content_name: 'WhatsApp Geral'}); }}
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 flex items-center justify-center group"
