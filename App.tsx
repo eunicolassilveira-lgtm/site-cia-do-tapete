@@ -31,7 +31,7 @@ const PRODUCTS = [
     id: 'windbanners',
     title: "Windbanners",
     description: "Marketing visual de alto impacto com movimento e cores vibrantes.",
-    image: "https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/site-cia-do-tapete/main/WhatsApp%20Image%202026-06-14%20at%2019.58.19.jpeg&output=webp&w=800",
+    image: "https://i.ibb.co/4wdvFLWr/Cia-windbanner.jpg",
     highlight: false,
     whatsappLink: "https://wa.me/555197141555?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20um%20or%C3%A7amento%20de%20WindBanner",
     badges: ["Alta Visibilidade", "Resistente ao Vento"],
@@ -394,7 +394,7 @@ export function App() {
                <div className="absolute inset-0 bg-brand-red-600 rounded-2xl transform rotate-1 scale-[1.02] opacity-10 transition-transform group-hover:rotate-0"></div>
                {/* 360 Panorama Viewer Replacement */}
                <img 
-                 src="https://wsrv.nl/?url=raw.githubusercontent.com/eunicolassilveira-lgtm/site-cia-do-tapete/main/WhatsApp%20Image%202026-06-14%20at%2018.33.24.jpeg&output=webp&w=1200" 
+                 src="https://i.ibb.co/4w75W49n/Cia-do-tapete-faxada.webp" 
                  alt="Cia do Tapete - Tour Visual"
                  loading="lazy"
                  className="relative w-full h-[350px] md:h-[500px] object-cover rounded-2xl shadow-xl border border-gray-100"
