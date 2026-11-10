@@ -1303,3 +1303,7 @@ html, body { overflow-x: clip; }
 .passo-p b { color: var(--on-light-2); transition: color 0.5s var(--ease); }
 .passo-p.is-on b { color: var(--on-light); }
 .passo-p__n { color: var(--red-2); }
+
+/* identificação da empresa no rodapé */
+.footer__empresa { padding-block: 22px 0; border-top: 1px solid var(--on-dark-3); font-size: 0.8rem; line-height: 1.6; color: var(--on-dark-2); }
+.footer__empresa + .footer__bottom { border-top: 0; padding-top: 10px; }

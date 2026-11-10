@@ -1328,6 +1328,10 @@ html, body { overflow-x: clip; }
 .passo-p.is-on b { color: var(--on-light); }
 .passo-p__n { color: var(--red-2); }
 
+/* identificação da empresa no rodapé */
+.footer__empresa { padding-block: 22px 0; border-top: 1px solid var(--on-dark-3); font-size: 0.8rem; line-height: 1.6; color: var(--on-dark-2); }
+.footer__empresa + .footer__bottom { border-top: 0; padding-top: 10px; }
+
 </style>
 
   <script>document.documentElement.classList.add('js');if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
@@ -1357,6 +1361,16 @@ html, body { overflow-x: clip; }
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   "name": "Cia do Tapete",
+  "legalName": "J P Tapetes e Capachos LTDA",
+  "taxID": "09.328.018/0001-91",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rodovia RS-239, 4220, Centro",
+    "addressLocality": "Sapiranga",
+    "addressRegion": "RS",
+    "postalCode": "93800-102",
+    "addressCountry": "BR"
+  },
   "description": "Capachos e tapetes personalizados com logo para empresas, em vinil que retém até 80% da sujeira. Cortinas, persianas, windbanners e grama sintética sob medida.",
   "logo": "https://site-cia-do-tapete.vercel.app/assets/logo.png",
   "image": "https://site-cia-do-tapete.vercel.app/assets/img/empresa-fachada-1400.webp",
@@ -2326,6 +2340,7 @@ html, body { overflow-x: clip; }
         </div>
       </div>
       <p class="footer__marca" aria-hidden="true"><span data-marca>Cia do Tapete</span></p>
+      <p class="footer__empresa">J P Tapetes e Capachos LTDA · CNPJ 09.328.018/0001-91 · Rodovia RS-239, 4220, Centro, Sapiranga/RS, CEP 93800-102 · WhatsApp (51) 9593-4868</p>
       <div class="footer__bottom">
         <span>© <span data-year>2026</span> Cia do Tapete. Todos os direitos reservados.</span>
         <span class="footer__legal"><a href="/privacidade">Política de privacidade</a><a href="#topo">Voltar ao topo ↑</a></span>
