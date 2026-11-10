@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://site-cia-do-tapete.vercel.app/sitemap.xml

@@ -38,6 +38,7 @@
   const waUrl = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(origin ? `${text}\n\n(Origem: ${origin})` : text)}`;
   const trackLead = (name) => {
     if (typeof window.fbq === 'function') window.fbq('track', 'Lead', { content_name: name || 'WhatsApp' });
+    if (typeof window.gtag === 'function') window.gtag('event', 'generate_lead', { lead_source: name || 'WhatsApp' });
   };
 
   $$('[data-wa]').forEach((a) => {
@@ -518,7 +519,7 @@
     const solta = () => { arrastando = false; el.classList.remove('is-arrastando'); mostra(); };
     pega.addEventListener('pointerup', solta);
     pega.addEventListener('pointercancel', solta);
-    window.addEventListener('load', mede);
+    if (document.readyState === 'complete') mede(); else window.addEventListener('load', mede);
     mede();
   })();
 
@@ -599,6 +600,59 @@
     modal.addEventListener('close', () => lenis?.start());
     $('[data-fb-fecha]', modal).addEventListener('click', fecha);
     modal.addEventListener('click', (e) => { if (e.target === modal) fecha(); });
+  })();
+
+  /* ---------------------------------------------------------
+     Tinta e máscara da trama: baixam depois da primeira tela; html.tinta liga as texturas no CSS
+     (a impressão do topo espera elas chegarem, no máximo 3 s)
+     --------------------------------------------------------- */
+  const tintaPronta = new Promise((ok) => {
+    let falta = 2;
+    const fim = () => { root.classList.add('tinta'); ok(); };
+    const um = () => { if (--falta === 0) fim(); };
+    // a máscara do CSS é buscada em modo CORS: o pré-carregamento usa o mesmo modo para aproveitar o mesmo arquivo (sem baixar duas vezes)
+    [['assets/vinyl-ink.webp', false], ['assets/vinyl-mask.webp', true]].forEach(([src, cors]) => { const im = new Image(); if (cors) im.crossOrigin = 'anonymous'; im.onload = im.onerror = um; im.src = src; });
+    setTimeout(fim, 3000);
+  });
+
+  /* ---------------------------------------------------------
+     Leveza: as texturas coloridas (modelos e "do seu jeito") e a capa do vídeo só baixam quando a seção está chegando
+     --------------------------------------------------------- */
+  (() => {
+    const perto = (seletores, margem, fn) => {
+      const els = seletores.map((q) => $(q)).filter(Boolean);
+      if (!els.length) return;
+      if (!('IntersectionObserver' in window)) return fn();
+      const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { io.disconnect(); fn(); } }, { rootMargin: margem });
+      els.forEach((el) => io.observe(el));
+    };
+    perto(['#modelos', '#personalize'], '1400px 0px', () => root.classList.add('tex-ok'));
+    perto(['#fabrica'], '900px 0px', () => $$('video[data-poster]').forEach((v) => { v.poster = v.dataset.poster; v.removeAttribute('data-poster'); }));
+  })();
+
+  /* ---------------------------------------------------------
+     Aviso de cookies: o Pixel da Meta (e o Analytics) só carregam com "Aceitar"; a escolha fica guardada
+     --------------------------------------------------------- */
+  (() => {
+    let escolha = null;
+    try { escolha = localStorage.getItem('cia-cookies'); } catch (e) { /* navegação privada */ }
+    if (escolha) return;
+    const av = document.createElement('div');
+    av.className = 'cookies';
+    av.setAttribute('role', 'region');
+    av.setAttribute('aria-label', 'Aviso de cookies');
+    av.innerHTML = '<p>Usamos cookies de marketing (Pixel da Meta) para medir nossos anúncios. Você pode aceitar ou recusar. <a href="/privacidade">Política de privacidade</a></p>'
+      + '<div class="cookies__acoes"><button type="button" class="cookies__btn" data-ck="recusado">Recusar</button><button type="button" class="cookies__btn cookies__btn--ok" data-ck="aceito">Aceitar</button></div>';
+    const mostra = () => { document.body.appendChild(av); requestAnimationFrame(() => requestAnimationFrame(() => av.classList.add('is-on'))); };
+    if (document.readyState === 'complete') setTimeout(mostra, 900); else window.addEventListener('load', () => setTimeout(mostra, 900), { once: true });
+    av.addEventListener('click', (e) => {
+      const b = e.target.closest('[data-ck]');
+      if (!b) return;
+      try { localStorage.setItem('cia-cookies', b.dataset.ck); } catch (er) { /* sem armazenamento: vale só nesta visita */ }
+      if (b.dataset.ck === 'aceito' && typeof window.carregaMarketing === 'function') window.carregaMarketing();
+      av.classList.remove('is-on');
+      setTimeout(() => av.remove(), 500);
+    });
   })();
 
   /* ---------------------------------------------------------
@@ -689,28 +743,20 @@
 
     abertura = gsap.timeline({ defaults: { ease: EASE }, onComplete: libera });
     abertura.add(() => entraUI(), 0.35);
-    abertura.fromTo('.doormat', { opacity: 0, y: 60, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0);
     const imp = printer?.print(1.7);
     if (imp) abertura.add(imp, 0.45);
     abertura.to({}, { duration: 0.15 });
   };
 
   // depois da impressão: o menu desce do desfoque, os textos sobem, a galeria e os selos entram
+  // o menu, os textos, a galeria e os selos entram pelo CSS (aparecem sem esperar o JavaScript);
+  // aqui só começa o balanço dos selos, depois que eles entraram
   const entraUI = () => {
-    const tl = gsap.timeline({ defaults: { ease: EASE } });
-    tl.fromTo('.nav', { opacity: 0, y: -14, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.2, clearProps: 'filter,transform' }, 0)
-      .fromTo('[data-hero]', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.1, stagger: 0.08 }, 0.05)
-      .fromTo('.gallery', { opacity: 0, y: 90 }, { opacity: 1, y: 0, duration: 1.6 }, 0.15)
-      .from('.gallery__item', { scale: 0.86, duration: 1.6, stagger: 0.05 }, 0.15)
-      .from('[data-chip]', { scale: 0.6, opacity: 0, y: 20, duration: 1, stagger: 0.15, ease: 'back.out(1.7)' }, 0.8)
-      .add(() => {
-        $$('[data-chip]').forEach((c, i) => gsap.to(c, { y: i ? 8 : -8, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1 }));
-      });
-    return tl;
+    gsap.delayedCall(1.6, () => $$('[data-chip]').forEach((c, i) => gsap.to(c, { y: i ? 8 : -8, duration: 2.6, ease: 'sine.inOut', yoyo: true, repeat: -1 })));
   };
 
   const fontsReady = Promise.race([document.fonts?.ready || Promise.resolve(), new Promise((r) => setTimeout(r, 600))]);
-  fontsReady.then(() => requestAnimationFrame(() => { playHero(); initScroll(); }));
+  Promise.all([fontsReady, tintaPronta]).then(() => requestAnimationFrame(() => { playHero(); initScroll(); }));
 
   /* ---------- animações de rolagem ---------- */
   function initScroll() {
@@ -734,7 +780,7 @@
         },
       });
     }
-    gsap.to('.doormat', { yPercent: 10, ease: 'none', force3D: true, scrollTrigger: { trigger: hero, start: 'top top', end: '70% top', scrub: true } });
+    gsap.fromTo('.doormat', { yPercent: 0, y: 0, scale: 1 }, { yPercent: 10, y: 0, scale: 1, ease: 'none', force3D: true, scrollTrigger: { trigger: hero, start: 'top top', end: '70% top', scrub: true } });
 
     // faixa vermelha: loop que inverte e acelera com a rolagem
     const mTrack = $('[data-marquee]');
@@ -801,7 +847,7 @@
     if (manifesto && hasSplit) {
       const split = SplitText.create(manifesto, { type: 'lines', mask: 'lines' });
       gsap.timeline({ scrollTrigger: { trigger: manifesto, start: 'top 78%', toggleActions: 'play none none reset' } })
-        .fromTo(split.lines, { yPercent: 110, opacity: 0.16 }, { yPercent: 0, duration: 1.1, ease: EASE, stagger: 0.07 }, 0)
+        .fromTo(split.lines, { yPercent: 110, opacity: 0.5 }, { yPercent: 0, duration: 1.1, ease: EASE, stagger: 0.07 }, 0)
         .to(split.lines, { opacity: 1, duration: 1, ease: 'power2.out', stagger: 0.22 }, 0.5);
     }
     $$('.reveal-img').forEach((fig) => {
