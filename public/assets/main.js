@@ -1025,7 +1025,20 @@
     const imps = mats.map((m) => impressora($('[data-arte]', m)));
     const janelas = [[0.04, 0.42], [0.2, 0.58], [0.36, 0.74]];
     const giros = [12, 0, -12];
-    const VMAX = 1 / 1.6, SEGUE = 9;
+    // no toque a cena acompanha o dedo mais de perto (no mouse ela segue amortecida, como antes)
+    const toque = window.matchMedia('(pointer: coarse)').matches;
+    const VMAX = toque ? 1 / 0.8 : 1 / 1.6, SEGUE = toque ? 14 : 9;
+    const palco = $('.modelos__palco', sec);
+    // percurso medido uma vez (e no resize): não depende da altura da tela, que muda quando a barra do navegador aparece/some
+    let percurso = 1;
+    const medePercurso = () => { percurso = Math.max(1, sec.offsetHeight - (palco ? palco.offsetHeight : window.innerHeight)); };
+    medePercurso();
+    window.addEventListener('resize', () => { if (!toque) medePercurso(); }, { passive: true });
+    window.addEventListener('orientationchange', () => setTimeout(medePercurso, 300));
+    // só trabalha quando a seção está perto da tela
+    let perto = false;
+    new IntersectionObserver(([e]) => { perto = e.isIntersecting; }, { rootMargin: '300px 0px' }).observe(sec);
+    const ultimo = mats.map(() => ({ tf: '', op: '' }));
     const limita = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
     const suave = (a, b, x) => { const t = limita((x - a) / (b - a)); return t * t * (3 - 2 * t); };
     let t = 0, fimOn = false, headOn = false;
@@ -1045,9 +1058,11 @@
     const desenha = (p) => {
       mats.forEach((m, i) => {
         const e = suave(janelas[i][0], janelas[i][1], p);
-        m.style.setProperty('--rx', (88 * (1 - e)).toFixed(2));
-        m.style.setProperty('--ry', (giros[i] * e).toFixed(2));
-        m.style.opacity = Math.min(1, e * 4).toFixed(3);
+        // gira direto no transform (a placa de vídeo resolve) e só escreve quando o valor muda
+        const tf = `translateX(-50%) rotateX(${(88 * (1 - e)).toFixed(1)}deg) rotateY(${(giros[i] * e).toFixed(1)}deg)`;
+        const op = Math.min(1, e * 4).toFixed(2);
+        if (tf !== ultimo[i].tf) { m.style.transform = tf; ultimo[i].tf = tf; }
+        if (op !== ultimo[i].op) { m.style.opacity = op; ultimo[i].op = op; }
         if (e > 0.98 && !imps[i].impresso()) imps[i].imprime(1.2);
       });
       // marcos: o título quando a cena começa; os nomes e a seta quando os três estão em pé
@@ -1058,8 +1073,8 @@
     };
 
     gsap.ticker.add((_, dms) => {
+      if (!perto) return;
       const r = sec.getBoundingClientRect();
-      const percurso = Math.max(1, sec.offsetHeight - window.innerHeight);
       const alvo = limita((-r.top / percurso) * 1.2);
       const dt = Math.min(0.05, dms / 1000);
       if (Math.abs(alvo - t) < 0.0005) t = alvo;

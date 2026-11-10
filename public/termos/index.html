@@ -1320,6 +1320,9 @@ html, body { overflow-x: clip; }
 .footer__empresa { padding-block: 22px 0; border-top: 1px solid var(--on-dark-3); font-size: 0.8rem; line-height: 1.6; color: var(--on-dark-2); }
 .footer__empresa + .footer__bottom { border-top: 0; padding-top: 10px; }
 
+/* modelos no celular: sem o reflexo no chão (caro para a placa de vídeo do celular a cada quadro) */
+@media (pointer: coarse), (max-width: 700px) { .mtap { -webkit-box-reflect: none; } }
+
 </style>
 
   <!-- Pixel da Meta e Google Analytics: só carregam depois do "Aceitar" (LGPD) -->
