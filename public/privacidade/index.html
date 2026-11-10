@@ -9,11 +9,10 @@
   <link rel="canonical" href="https://site-cia-do-tapete.vercel.app/privacidade">
   <meta name="theme-color" content="#0F0E0D">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap"></noscript>
   <style>
+/* Inter servida pelo próprio site (só os caracteres latinos, pesos 400 a 900): sem conexão extra com o Google */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/assets/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
 /* =========================================================
    Cia do Tapete 2026
    ========================================================= */
@@ -1355,7 +1354,7 @@ html, body { overflow-x: clip; }
         <li><b>Botão do WhatsApp.</b> Ao clicar, o WhatsApp abre com uma mensagem pronta. O que você escreve no site, como o nome da sua empresa ou o seu CEP, vai só dentro dessa mensagem: o site não guarda nada disso. A conversa acontece no WhatsApp.</li>
         <li><b>De onde veio a visita.</b> Se você chegou por um anúncio, o site lê o nome da campanha no endereço da página e o coloca na mensagem do WhatsApp, para sabermos qual anúncio funcionou. Essa informação fica só no seu navegador e some quando você fecha a aba.</li>
         <li><b>A sua escolha sobre cookies.</b> Fica guardada no seu navegador, para não perguntarmos de novo a cada visita.</li>
-        <li><b>Dados técnicos de acesso.</b> A empresa que hospeda o site (Vercel) registra dados técnicos, como o endereço IP, para manter o site no ar e seguro. A fonte do site vem do Google Fonts, então o seu navegador se conecta ao Google para baixá-la.</li>
+        <li><b>Dados técnicos de acesso.</b> A empresa que hospeda o site (Vercel) registra dados técnicos, como o endereço IP, para manter o site no ar e seguro.</li>
       </ul>
 
       <h2>Para que usamos</h2>
@@ -1366,7 +1365,7 @@ html, body { overflow-x: clip; }
       </ul>
 
       <h2>Com quem compartilhamos</h2>
-      <p>Só com os serviços que fazem o site e o atendimento funcionarem: a Meta (Pixel e WhatsApp), o Google (fonte do site) e a Vercel (hospedagem). Cada uma tem a sua própria política de privacidade. Não vendemos os seus dados para ninguém.</p>
+      <p>Só com os serviços que fazem o site e o atendimento funcionarem: a Meta (Pixel e WhatsApp) e a Vercel (hospedagem). Cada uma tem a sua própria política de privacidade. Não vendemos os seus dados para ninguém.</p>
 
       <h2>Por quanto tempo guardamos</h2>
       <ul>

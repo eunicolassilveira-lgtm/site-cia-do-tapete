@@ -19,15 +19,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/logo.png">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- a fonte não segura o desenho da página: carrega em paralelo e entra quando chegar (display=swap) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..900&display=swap"></noscript>
   <!-- a textura do capacho do topo é o maior elemento da primeira tela: vem antes de tudo -->
   <link rel="preload" as="image" href="/assets/vinyl-base.webp" fetchpriority="high">
   <style>
+/* Inter servida pelo próprio site (só os caracteres latinos, pesos 400 a 900): sem conexão extra com o Google */
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/assets/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
 /* =========================================================
    Cia do Tapete 2026
    ========================================================= */
