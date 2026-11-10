@@ -1297,3 +1297,9 @@ html, body { overflow-x: clip; }
 .doc__btn:hover { background: #efece8; }
 .doc__btn--ok { background: var(--red); color: #fff; box-shadow: none; }
 .doc__btn--ok:hover { background: var(--red-2); }
+
+/* passos do "Do seu jeito": o passo apagado fica cinza (e não transparente), com contraste suficiente; o ativo acende em preto */
+.passo-p { opacity: 1; }
+.passo-p b { color: var(--on-light-2); transition: color 0.5s var(--ease); }
+.passo-p.is-on b { color: var(--on-light); }
+.passo-p__n { color: var(--red-2); }
