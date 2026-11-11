@@ -1323,6 +1323,12 @@ html, body { overflow-x: clip; }
 /* modelos no celular: sem o reflexo no chão (caro para a placa de vídeo do celular a cada quadro) */
 @media (pointer: coarse), (max-width: 700px) { .mtap { -webkit-box-reflect: none; } }
 
+/* modelos no celular: seção normal (sem ficar presa à rolagem); a animação toca sozinha quando ela aparece */
+@media (pointer: coarse), (max-width: 700px) {
+  .modelos { height: auto; }
+  .modelos__palco { position: relative; }
+}
+
 </style>
 
   <!-- Pixel da Meta e Google Analytics: só carregam depois do "Aceitar" (LGPD) -->

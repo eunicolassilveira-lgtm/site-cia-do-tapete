@@ -1072,6 +1072,20 @@
       if (p < 0.7 && fimOn) { fimOn = false; sai(linhas('.modelos__nomes [data-marco]')); gsap.to($('[data-marco-seta]', sec), { opacity: 0, duration: 0.3 }); }
     };
 
+    // no celular a cena não fica presa à rolagem: quando aparece, os capachos sobem e imprimem sozinhos, uma vez
+    // (o arraste fica livre, com a rolagem nativa do aparelho)
+    if (window.matchMedia('(pointer: coarse), (max-width: 700px)').matches) {
+      const estado = { p: 0 };
+      let tocou = false;
+      desenha(0);
+      new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting || tocou) return;
+        tocou = true;
+        gsap.to(estado, { p: 1, duration: 2.8, ease: 'power1.inOut', onUpdate: () => desenha(estado.p) });
+      }, { threshold: 0.35 }).observe(sec);
+      return;
+    }
+
     gsap.ticker.add((_, dms) => {
       if (!perto) return;
       const r = sec.getBoundingClientRect();
