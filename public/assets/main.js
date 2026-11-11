@@ -1230,6 +1230,40 @@
       if (i !== atual) vai(i);
     };
 
+    // no celular: a seção não fica presa à rolagem. Quando aparece, o capacho se monta sozinho e passa pelas etapas
+    // como um carrossel (pausa quando sai da tela). Capacho parado num ângulo fixo: nada é redesenhado ao arrastar.
+    if (window.matchMedia('(pointer: coarse), (max-width: 700px)').matches) {
+      const monta = (p) => {
+        mat.style.setProperty('--manta', (0.92 + 0.08 * suave(0, 0.05, p)).toFixed(3));
+        mat.style.setProperty('--manta-op', suave(0, 0.04, p).toFixed(3));
+        mat.style.setProperty('--fio', `${(suave(0.03, 0.12, p) * 100).toFixed(2)}%`);
+      };
+      mat.style.setProperty('--rx', '9');
+      mat.style.setProperty('--ry', '-3');
+      monta(0);
+      vai(0);
+      const estado = { p: 0 };
+      let montado = false, visivel = false, relogio = 0, etapa = 0;
+      const proxima = () => {
+        clearTimeout(relogio);
+        if (!visivel) return;
+        relogio = setTimeout(() => {
+          etapa = etapa >= ETAPAS.length - 1 ? 1 : etapa + 1;
+          vai(etapa);
+          proxima();
+        }, etapa === 0 ? 1200 : 3000);
+      };
+      new IntersectionObserver(([e]) => {
+        visivel = e.isIntersecting;
+        if (!visivel) { clearTimeout(relogio); return; }
+        if (!montado) {
+          montado = true;
+          gsap.to(estado, { p: 0.12, duration: 1.8, ease: 'power2.out', onUpdate: () => monta(estado.p), onComplete: proxima });
+        } else proxima();
+      }, { threshold: 0.4 }).observe(sec);
+      return;
+    }
+
     gsap.ticker.add((_, dms) => {
       const r = sec.getBoundingClientRect();
       if (r.bottom < -200 || r.top > window.innerHeight + 200) return;

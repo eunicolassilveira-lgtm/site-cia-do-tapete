@@ -1341,6 +1341,13 @@ html, body { overflow-x: clip; }
   .modelos__palco { position: relative; }
 }
 
+/* "do seu jeito" no celular: seção normal (sem ficar presa à rolagem) e uma sombra só no capacho (mais leve) */
+@media (pointer: coarse), (max-width: 700px) {
+  .perso { height: auto; }
+  .perso__palco { position: relative; }
+  .pmat { filter: drop-shadow(0 24px 26px rgba(20, 18, 16, 0.26)); }
+}
+
 </style>
 
   <script>document.documentElement.classList.add('js');if('scrollRestoration' in history)history.scrollRestoration='manual';</script>

@@ -1316,3 +1316,10 @@ html, body { overflow-x: clip; }
   .modelos { height: auto; }
   .modelos__palco { position: relative; }
 }
+
+/* "do seu jeito" no celular: seção normal (sem ficar presa à rolagem) e uma sombra só no capacho (mais leve) */
+@media (pointer: coarse), (max-width: 700px) {
+  .perso { height: auto; }
+  .perso__palco { position: relative; }
+  .pmat { filter: drop-shadow(0 24px 26px rgba(20, 18, 16, 0.26)); }
+}
