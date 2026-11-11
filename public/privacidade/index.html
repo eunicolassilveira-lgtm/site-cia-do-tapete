@@ -1336,6 +1336,16 @@ html, body { overflow-x: clip; }
   .pmat { filter: drop-shadow(0 24px 26px rgba(20, 18, 16, 0.26)); }
 }
 
+/* trilho no celular: carrossel de arrastar para o lado, foto por foto (rolagem nativa), sem prender a página */
+@media (pointer: coarse), (max-width: 700px) {
+  .trilho { height: auto !important; }
+  .trilho__palco { position: relative; height: auto; padding: 96px 0 64px; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); overscroll-behavior-x: contain; scrollbar-width: none; }
+  .trilho__palco::-webkit-scrollbar { display: none; }
+  .trilho__faixa { width: max-content; will-change: auto; transform: none !important; }
+  .trilho__abre, .passo { scroll-snap-align: start; }
+  .passo__foto img { will-change: auto; }
+}
+
 </style>
 
   <!-- Pixel da Meta e Google Analytics: só carregam depois do "Aceitar" (LGPD) -->

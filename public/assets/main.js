@@ -1107,6 +1107,13 @@
     const sec = $('[data-trilho]');
     if (!sec) return;
     const faixa = $('[data-trilho-faixa]', sec);
+    const textos = () => ScrollTrigger.create({
+      trigger: sec, start: 'top 75%', toggleActions: 'play none none reset',
+      onEnter: () => gsap.fromTo($$('[data-sobe]', sec), { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 1.1, ease: EASE, stagger: 0.07, overwrite: 'auto' }),
+      onLeaveBack: () => gsap.set($$('[data-sobe]', sec), { yPercent: 110, y: 0 }),
+    });
+    // no celular: carrossel de arrastar para o lado (rolagem nativa, foto por foto), sem prender a página
+    if (window.matchMedia('(pointer: coarse), (max-width: 700px)').matches) { textos(); return; }
     let sobra = -1;
     let espera = 0;
     // a altura do trilho muda quando as fotos chegam: recalcula as posições uma vez só, depois que tudo assentar
@@ -1125,11 +1132,7 @@
       const p = Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / Math.max(1, sobra)));
       faixa.style.transform = `translate3d(${(-p * sobra).toFixed(1)}px, 0, 0)`;
     });
-    ScrollTrigger.create({
-      trigger: sec, start: 'top 75%', toggleActions: 'play none none reset',
-      onEnter: () => gsap.fromTo($$('[data-sobe]', sec), { yPercent: 110, y: 0 }, { yPercent: 0, y: 0, duration: 1.1, ease: EASE, stagger: 0.07, overwrite: 'auto' }),
-      onLeaveBack: () => gsap.set($$('[data-sobe]', sec), { yPercent: 110, y: 0 }),
-    });
+    textos();
   }
 
   /* ---------------------------------------------------------
@@ -1138,6 +1141,7 @@
   function paralaxeMoldura() {
     const fotos = $$('[data-moldura]');
     if (!fotos.length) return;
+    if (window.matchMedia('(pointer: coarse), (max-width: 700px)').matches) return; // no celular as fotos ficam paradas
     gsap.ticker.add(() => {
       const vh = window.innerHeight;
       for (const img of fotos) {
