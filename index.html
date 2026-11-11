@@ -20,10 +20,15 @@
   <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png">
   <link rel="apple-touch-icon" href="/assets/logo.png">
   <!-- a textura do capacho do topo é o maior elemento da primeira tela: vem antes de tudo -->
-  <link rel="preload" as="image" href="/assets/vinyl-base.webp" fetchpriority="high">
+  <link rel="preload" as="image" href="/assets/vinyl-base-512.webp" fetchpriority="high" media="(max-width: 700px)">
+  <link rel="preload" as="image" href="/assets/vinyl-base.webp" fetchpriority="high" media="(min-width: 701px)">
   <style>
 /* Inter servida pelo próprio site (só os caracteres latinos, pesos 400 a 900): sem conexão extra com o Google */
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('/assets/fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+/* texturas da trama: no computador, 640/576 px; no celular (onde a trama aparece com ~300 px), 512 px */
+:root { --vb: url('/assets/vinyl-base.webp'); --vi: url('/assets/vinyl-ink.webp'); --vm: url('/assets/vinyl-mask.webp'); }
+@media (max-width: 700px) { :root { --vb: url('/assets/vinyl-base-512.webp'); --vi: url('/assets/vinyl-ink-512.webp'); --vm: url('/assets/vinyl-mask-512.webp'); } }
 
 /* =========================================================
    Cia do Tapete 2026
@@ -223,7 +228,7 @@ section { position: relative; }
   position: relative; overflow: hidden; isolation: isolate;
   min-height: clamp(380px, 52svh, 560px);
   border-radius: 26px;
-  background: linear-gradient(rgba(12,11,10,.12), rgba(12,11,10,.12)), #1e1c1a url("/assets/vinyl-base.webp") 0 0 / var(--tile) repeat;
+  background: linear-gradient(rgba(12,11,10,.12), rgba(12,11,10,.12)), #1e1c1a var(--vb) 0 0 / var(--tile) repeat;
   box-shadow:
     inset 0 0 0 var(--rim) #141312,
     inset 0 0 0 calc(var(--rim) + 1px) rgba(255,255,255,.07),
@@ -248,10 +253,10 @@ section { position: relative; }
 }
 /* a tinta e a máscara da trama só baixam quando a impressão vai começar (html.tinta): a primeira tela recebe só a textura do capacho */
 .tinta .print__layer {
-  background: linear-gradient(rgba(240,234,222,.5), rgba(240,234,222,.5)), url("/assets/vinyl-ink.webp") 0 0 / var(--tile) repeat;
+  background: linear-gradient(rgba(240,234,222,.5), rgba(240,234,222,.5)), var(--vi) 0 0 / var(--tile) repeat;
   -webkit-background-clip: text; background-clip: text;
-  -webkit-mask: url("/assets/vinyl-mask.webp") 0 0 / var(--tile) repeat;
-  mask: url("/assets/vinyl-mask.webp") 0 0 / var(--tile) repeat;
+  -webkit-mask: var(--vm) 0 0 / var(--tile) repeat;
+  mask: var(--vm) 0 0 / var(--tile) repeat;
 }
 .js .print__layer--ghost { visibility: hidden; }
 .no-motion .print__layer--ghost { visibility: visible; }
@@ -894,7 +899,7 @@ html::-webkit-scrollbar { display: none; }
 }
 .mtap {
   --tile: 52cqw;
-  --base: url('/assets/vinyl-base.webp');
+  --base: var(--vb);
   --borda: #151413;
   --tinta: none;
   --tinta-cor: rgba(240, 234, 222, 0.5);
@@ -910,7 +915,7 @@ html::-webkit-scrollbar { display: none; }
   -webkit-box-reflect: below 3px linear-gradient(transparent 68%, rgba(255, 255, 255, 0.15));
   will-change: transform;
 }
-.tinta .mtap { --tinta: url('/assets/vinyl-ink.webp'); }
+.tinta .mtap { --tinta: var(--vi); }
 .mtap--vermelho { --x: -32; }
 .mtap--grafite { --x: 0; }
 .mtap--cafe { --x: 32; }
@@ -941,7 +946,7 @@ html::-webkit-scrollbar { display: none; }
   background-clip: text;
   color: transparent;
 }
-.tinta .mtinta { -webkit-mask: url('/assets/vinyl-mask.webp') 0 0 / var(--tile) repeat; mask: url('/assets/vinyl-mask.webp') 0 0 / var(--tile) repeat; }
+.tinta .mtinta { -webkit-mask: var(--vm) 0 0 / var(--tile) repeat; mask: var(--vm) 0 0 / var(--tile) repeat; }
 html.js .mtinta--fantasma { visibility: hidden; }
 .mtinta__nome { max-width: 100%; font-size: var(--fs, 40px); font-weight: 800; line-height: 0.92; letter-spacing: -0.03em; text-transform: uppercase; text-wrap: balance; padding-bottom: 0.04em; }
 .mtinta__sub { margin-top: 0.8em; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: max(9px, calc(var(--fs, 40px) * 0.2)); font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
@@ -1088,7 +1093,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
 .pmat__trama { position: absolute; inset: 3.4cqw; border-radius: 1.2cqw; overflow: hidden; clip-path: inset(0 calc(100% - var(--fio, 100%)) 0 0 round 1.2cqw); box-shadow: inset 0 0 6cqw 1cqw rgba(0, 0, 0, 0.45); }
 .pmat__trama::after { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(165deg, rgba(255, 255, 255, 0.14), transparent 40%, transparent 60%, rgba(0, 0, 0, 0.3)); }
 .cor { position: absolute; inset: 0; background: var(--tex) 0 0 / var(--tile) repeat; opacity: 0; transition: opacity 0.9s var(--ease); }
-.cor--grafite { --tex: url('/assets/vinyl-base.webp'); }
+.cor--grafite { --tex: var(--vb); }
 .tex-ok .cor--vermelho { --tex: url('/assets/vinyl-vermelho.webp'); }
 .tex-ok .cor--cafe { --tex: url('/assets/vinyl-cafe.webp'); }
 .tex-ok .cor--azul { --tex: url('/assets/vinyl-azul.webp'); }
@@ -1097,7 +1102,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
 .pmat[data-cor='azul'] .cor--azul, .pmat[data-cor='verde'] .cor--verde { opacity: 1; }
 
 .pmat__arte { position: absolute; inset: 12% 13%; z-index: 3; --tinta: none; --tinta-cor: rgba(240, 234, 222, 0.5); }
-.tinta .pmat__arte { --tinta: url('/assets/vinyl-ink.webp'); }
+.tinta .pmat__arte { --tinta: var(--vi); }
 .tex-ok .pmat__arte[data-tinta='amarelo'] { --tinta: url('/assets/vinyl-amarelo.webp'); --tinta-cor: rgba(255, 214, 58, 0.42); }
 .pmat__arte .mtinta__sub { font-size: max(9px, calc(var(--fs, 40px) * 0.17)); }
 .pmat__arte[data-fonte='serif'] .mtinta__nome { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; text-transform: none; letter-spacing: -0.01em; }
@@ -1161,7 +1166,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
   justify-content: space-between;
   padding: 22px 22px 20px;
   color: var(--on-dark);
-  background: linear-gradient(rgba(14, 13, 12, 0.55), rgba(14, 13, 12, 0.55)), url('/assets/vinyl-base.webp') 0 0 / 180px repeat;
+  background: linear-gradient(rgba(14, 13, 12, 0.55), rgba(14, 13, 12, 0.55)), var(--vb) 0 0 / 180px repeat;
   box-shadow: inset 0 0 0 6px #151413, var(--shadow);
 }
 .fb--texto .fb__aspas { font-size: 4.2rem; line-height: 0.6; font-weight: 800; color: var(--red); }
@@ -1654,8 +1659,8 @@ html, body { overflow-x: clip; }
         <div class="work__grid">
           <article class="case" data-reveal>
             <div class="ba" data-ba style="--pos:50%">
-              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-aladdin-depois-640.webp" data-srcset="/assets/img/ba-aladdin-depois-640.webp 640w, /assets/img/ba-aladdin-depois-760.webp 760w, /assets/img/ba-aladdin-depois-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 32px), 600px" alt="Depois: capacho personalizado novo da Aladdin Arguilas" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" class="ba__after" draggable="false">
-              <div class="ba__before"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-aladdin-antes-640.webp" data-srcset="/assets/img/ba-aladdin-antes-640.webp 640w, /assets/img/ba-aladdin-antes-760.webp 760w, /assets/img/ba-aladdin-antes-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 32px), 600px" alt="Antes: capacho antigo desgastado na entrada da loja" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></div>
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-aladdin-depois-640.webp" data-srcset="/assets/img/ba-aladdin-depois-640.webp 640w, /assets/img/ba-aladdin-depois-760.webp 760w, /assets/img/ba-aladdin-depois-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 56px), 600px" alt="Depois: capacho personalizado novo da Aladdin Arguilas" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" class="ba__after" draggable="false">
+              <div class="ba__before"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-aladdin-antes-640.webp" data-srcset="/assets/img/ba-aladdin-antes-640.webp 640w, /assets/img/ba-aladdin-antes-760.webp 760w, /assets/img/ba-aladdin-antes-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 56px), 600px" alt="Antes: capacho antigo desgastado na entrada da loja" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></div>
               <span class="ba__label ba__label--l">Antes</span>
               <span class="ba__label ba__label--r">Depois</span>
               <span class="ba__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -1669,8 +1674,8 @@ html, body { overflow-x: clip; }
 
           <article class="case" data-reveal>
             <div class="ba" data-ba style="--pos:50%">
-              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-paodemel-depois-640.webp" data-srcset="/assets/img/ba-paodemel-depois-640.webp 640w, /assets/img/ba-paodemel-depois-760.webp 760w, /assets/img/ba-paodemel-depois-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 32px), 600px" alt="Depois: capacho personalizado novo da Padaria Pão de Mel" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" class="ba__after" draggable="false">
-              <div class="ba__before"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-paodemel-antes-640.webp" data-srcset="/assets/img/ba-paodemel-antes-640.webp 640w, /assets/img/ba-paodemel-antes-760.webp 760w, /assets/img/ba-paodemel-antes-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 32px), 600px" alt="Antes: capacho antigo e desbotado" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></div>
+              <img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-paodemel-depois-640.webp" data-srcset="/assets/img/ba-paodemel-depois-640.webp 640w, /assets/img/ba-paodemel-depois-760.webp 760w, /assets/img/ba-paodemel-depois-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 56px), 600px" alt="Depois: capacho personalizado novo da Padaria Pão de Mel" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" class="ba__after" draggable="false">
+              <div class="ba__before"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="/assets/img/ba-paodemel-antes-640.webp" data-srcset="/assets/img/ba-paodemel-antes-640.webp 640w, /assets/img/ba-paodemel-antes-760.webp 760w, /assets/img/ba-paodemel-antes-1100.webp 1100w" sizes="(max-width: 800px) calc(100vw - 56px), 600px" alt="Antes: capacho antigo e desbotado" width="1100" height="825" loading="lazy" fetchpriority="low" decoding="async" draggable="false"></div>
               <span class="ba__label ba__label--l">Antes</span>
               <span class="ba__label ba__label--r">Depois</span>
               <span class="ba__handle" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>

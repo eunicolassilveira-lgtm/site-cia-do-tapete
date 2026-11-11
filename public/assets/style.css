@@ -1,6 +1,10 @@
 /* Inter servida pelo próprio site (só os caracteres latinos, pesos 400 a 900): sem conexão extra com o Google */
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url('fonts/inter-latin.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
+/* texturas da trama: no computador, 640/576 px; no celular (onde a trama aparece com ~300 px), 512 px */
+:root { --vb: url('vinyl-base.webp'); --vi: url('vinyl-ink.webp'); --vm: url('vinyl-mask.webp'); }
+@media (max-width: 700px) { :root { --vb: url('vinyl-base-512.webp'); --vi: url('vinyl-ink-512.webp'); --vm: url('vinyl-mask-512.webp'); } }
+
 /* =========================================================
    Cia do Tapete 2026
    ========================================================= */
@@ -199,7 +203,7 @@ section { position: relative; }
   position: relative; overflow: hidden; isolation: isolate;
   min-height: clamp(380px, 52svh, 560px);
   border-radius: 26px;
-  background: linear-gradient(rgba(12,11,10,.12), rgba(12,11,10,.12)), #1e1c1a url("vinyl-base.webp") 0 0 / var(--tile) repeat;
+  background: linear-gradient(rgba(12,11,10,.12), rgba(12,11,10,.12)), #1e1c1a var(--vb) 0 0 / var(--tile) repeat;
   box-shadow:
     inset 0 0 0 var(--rim) #141312,
     inset 0 0 0 calc(var(--rim) + 1px) rgba(255,255,255,.07),
@@ -224,10 +228,10 @@ section { position: relative; }
 }
 /* a tinta e a máscara da trama só baixam quando a impressão vai começar (html.tinta): a primeira tela recebe só a textura do capacho */
 .tinta .print__layer {
-  background: linear-gradient(rgba(240,234,222,.5), rgba(240,234,222,.5)), url("vinyl-ink.webp") 0 0 / var(--tile) repeat;
+  background: linear-gradient(rgba(240,234,222,.5), rgba(240,234,222,.5)), var(--vi) 0 0 / var(--tile) repeat;
   -webkit-background-clip: text; background-clip: text;
-  -webkit-mask: url("vinyl-mask.webp") 0 0 / var(--tile) repeat;
-  mask: url("vinyl-mask.webp") 0 0 / var(--tile) repeat;
+  -webkit-mask: var(--vm) 0 0 / var(--tile) repeat;
+  mask: var(--vm) 0 0 / var(--tile) repeat;
 }
 .js .print__layer--ghost { visibility: hidden; }
 .no-motion .print__layer--ghost { visibility: visible; }
@@ -870,7 +874,7 @@ html::-webkit-scrollbar { display: none; }
 }
 .mtap {
   --tile: 52cqw;
-  --base: url('vinyl-base.webp');
+  --base: var(--vb);
   --borda: #151413;
   --tinta: none;
   --tinta-cor: rgba(240, 234, 222, 0.5);
@@ -886,7 +890,7 @@ html::-webkit-scrollbar { display: none; }
   -webkit-box-reflect: below 3px linear-gradient(transparent 68%, rgba(255, 255, 255, 0.15));
   will-change: transform;
 }
-.tinta .mtap { --tinta: url('vinyl-ink.webp'); }
+.tinta .mtap { --tinta: var(--vi); }
 .mtap--vermelho { --x: -32; }
 .mtap--grafite { --x: 0; }
 .mtap--cafe { --x: 32; }
@@ -917,7 +921,7 @@ html::-webkit-scrollbar { display: none; }
   background-clip: text;
   color: transparent;
 }
-.tinta .mtinta { -webkit-mask: url('vinyl-mask.webp') 0 0 / var(--tile) repeat; mask: url('vinyl-mask.webp') 0 0 / var(--tile) repeat; }
+.tinta .mtinta { -webkit-mask: var(--vm) 0 0 / var(--tile) repeat; mask: var(--vm) 0 0 / var(--tile) repeat; }
 html.js .mtinta--fantasma { visibility: hidden; }
 .mtinta__nome { max-width: 100%; font-size: var(--fs, 40px); font-weight: 800; line-height: 0.92; letter-spacing: -0.03em; text-transform: uppercase; text-wrap: balance; padding-bottom: 0.04em; }
 .mtinta__sub { margin-top: 0.8em; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; font-size: max(9px, calc(var(--fs, 40px) * 0.2)); font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; }
@@ -1064,7 +1068,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
 .pmat__trama { position: absolute; inset: 3.4cqw; border-radius: 1.2cqw; overflow: hidden; clip-path: inset(0 calc(100% - var(--fio, 100%)) 0 0 round 1.2cqw); box-shadow: inset 0 0 6cqw 1cqw rgba(0, 0, 0, 0.45); }
 .pmat__trama::after { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(165deg, rgba(255, 255, 255, 0.14), transparent 40%, transparent 60%, rgba(0, 0, 0, 0.3)); }
 .cor { position: absolute; inset: 0; background: var(--tex) 0 0 / var(--tile) repeat; opacity: 0; transition: opacity 0.9s var(--ease); }
-.cor--grafite { --tex: url('vinyl-base.webp'); }
+.cor--grafite { --tex: var(--vb); }
 .tex-ok .cor--vermelho { --tex: url('vinyl-vermelho.webp'); }
 .tex-ok .cor--cafe { --tex: url('vinyl-cafe.webp'); }
 .tex-ok .cor--azul { --tex: url('vinyl-azul.webp'); }
@@ -1073,7 +1077,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
 .pmat[data-cor='azul'] .cor--azul, .pmat[data-cor='verde'] .cor--verde { opacity: 1; }
 
 .pmat__arte { position: absolute; inset: 12% 13%; z-index: 3; --tinta: none; --tinta-cor: rgba(240, 234, 222, 0.5); }
-.tinta .pmat__arte { --tinta: url('vinyl-ink.webp'); }
+.tinta .pmat__arte { --tinta: var(--vi); }
 .tex-ok .pmat__arte[data-tinta='amarelo'] { --tinta: url('vinyl-amarelo.webp'); --tinta-cor: rgba(255, 214, 58, 0.42); }
 .pmat__arte .mtinta__sub { font-size: max(9px, calc(var(--fs, 40px) * 0.17)); }
 .pmat__arte[data-fonte='serif'] .mtinta__nome { font-family: Georgia, 'Times New Roman', serif; font-weight: 700; text-transform: none; letter-spacing: -0.01em; }
@@ -1137,7 +1141,7 @@ html.js [data-marco], html.js [data-sobe] { transform: translateY(110%); }
   justify-content: space-between;
   padding: 22px 22px 20px;
   color: var(--on-dark);
-  background: linear-gradient(rgba(14, 13, 12, 0.55), rgba(14, 13, 12, 0.55)), url('vinyl-base.webp') 0 0 / 180px repeat;
+  background: linear-gradient(rgba(14, 13, 12, 0.55), rgba(14, 13, 12, 0.55)), var(--vb) 0 0 / 180px repeat;
   box-shadow: inset 0 0 0 6px #151413, var(--shadow);
 }
 .fb--texto .fb__aspas { font-size: 4.2rem; line-height: 0.6; font-weight: 800; color: var(--red); }

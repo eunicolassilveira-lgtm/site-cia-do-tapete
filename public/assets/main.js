@@ -611,7 +611,8 @@
     const fim = () => { root.classList.add('tinta'); ok(); };
     const um = () => { if (--falta === 0) fim(); };
     // a máscara do CSS é buscada em modo CORS: o pré-carregamento usa o mesmo modo para aproveitar o mesmo arquivo (sem baixar duas vezes)
-    [['assets/vinyl-ink.webp', false], ['assets/vinyl-mask.webp', true]].forEach(([src, cors]) => { const im = new Image(); if (cors) im.crossOrigin = 'anonymous'; im.onload = im.onerror = um; im.src = src; });
+    const sufixo = window.matchMedia('(max-width: 700px)').matches ? '-512' : '';
+    [[`assets/vinyl-ink${sufixo}.webp`, false], [`assets/vinyl-mask${sufixo}.webp`, true]].forEach(([src, cors]) => { const im = new Image(); if (cors) im.crossOrigin = 'anonymous'; im.onload = im.onerror = um; im.src = src; });
     setTimeout(fim, 3000);
   });
 
