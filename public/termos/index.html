@@ -1346,6 +1346,11 @@ html, body { overflow-x: clip; }
   .passo__foto img { will-change: auto; }
 }
 
+/* crédito de quem fez o site, no rodapé */
+.footer__credito { display: inline-block; margin-left: 10px; padding-left: 10px; border-left: 1px solid var(--on-dark-3); }
+.footer__credito b { font-weight: 700; letter-spacing: 0.02em; color: var(--on-dark); }
+@media (max-width: 560px) { .footer__credito { display: block; margin: 6px 0 0; padding: 0; border: 0; } }
+
 </style>
 
   <!-- Pixel da Meta e Google Analytics: só carregam depois do "Aceitar" (LGPD) -->
@@ -1424,7 +1429,7 @@ html, body { overflow-x: clip; }
     <div class="wrap">
       <p class="footer__empresa">J P Tapetes e Capachos LTDA · CNPJ 09.328.018/0001-91 · Rodovia RS-239, 4220, Centro, Sapiranga/RS, CEP 93800-102 · WhatsApp (51) 9593-4868</p>
       <div class="footer__bottom">
-        <span>© 2026 Cia do Tapete. Todos os direitos reservados.</span>
+        <span>© 2026 Cia do Tapete. Todos os direitos reservados. <span class="footer__credito">Desenvolvido por <b>Arka Digital</b></span></span>
         <span class="footer__legal"><a href="/privacidade">Política de privacidade</a><a href="/termos">Termos de uso</a></span>
       </div>
     </div>
